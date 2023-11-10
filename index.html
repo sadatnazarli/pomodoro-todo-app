@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e6f7ff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        h2 {
+            color: #007bff;
+        }
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+        .task {
+            background-color: #f8f9fa;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            transition: box-shadow 0.3s;
+        }
+        .task:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        .task.completed {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+        .task input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .priority-high {
+            color: #d9534f;
+            font-weight: bold;
+        }
+        .priority-medium {
+            color: #f0ad4e;
+            font-weight: bold;
+        }
+        .priority-low {
+            color: #5bc0de;
+            font-weight: bold;
+        }
+        .due-time {
+            color: #5bc0de;
+        }
+        #add-task-form .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        #add-task-form .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        #menu-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 class="text-center mb-4">To-Do List</h2>
+    <ul class="task-list" id="task-list">
+        <!-- Task items will be added dynamically with JavaScript -->
+    </ul>
+    <form id="add-task-form" class="mb-4">
+        <div class="form-row">
+            <div class="col-8">
+                <input type="text" class="form-control" id="task-input" placeholder="Add a new task" required>
+            </div>
+            <div class="col-2">
+                <select class="form-control" id="priority-select">
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+            <div class="col-2">
+                <input type="time" class="form-control" id="due-time-input">
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary mt-2" onclick="addTask()">Add Task</button>
+    </form>
+
+    <button id="menu-button" onclick="goToPomodoroPage()">Go to Pomodoro</button>
+</div>
+
+<script>
+    function goToPomodoroPage() {
+        window.location.href = 'pomodoro.html';
+    }
+
+    let tasks = [];
+
+    function renderTasks() {
+        const taskListElement = document.getElementById('task-list');
+        taskListElement.innerHTML = '';
+
+        tasks.forEach(task => {
+            const taskElement = document.createElement('li');
+            taskElement.className = `task ${task.completed ? 'completed' : ''}`;
+            taskElement.innerHTML = `
+                <input type="checkbox" onchange="toggleTask(${task.id})" ${task.completed ? 'checked' : ''}>
+                <span>${task.text}</span>
+                <span class="priority-${task.priority}">${task.priority}</span>
+                <span class="due-time">${task.dueTime}</span>
+            `;
+            taskListElement.appendChild(taskElement);
+        });
+    }
+
+    function addTask() {
+        const taskInput = document.getElementById('task-input').value;
+        const prioritySelect = document.getElementById('priority-select').value;
+        const dueTimeInput = document.getElementById('due-time-input').value;
+
+        const newTask = {
+            id: tasks.length + 1,
+            text: taskInput,
+            priority: prioritySelect,
+            dueTime: dueTimeInput,
+            completed: false,
+        };
+
+        tasks.push(newTask);
+        renderTasks();
+        clearForm();
+    }
+
+    function toggleTask(id) {
+        const task = tasks.find(task => task.id === id);
+        if (task) {
+            task.completed = !task.completed;
+            renderTasks();
+        }
+    }
+
+    function clearForm() {
+        document.getElementById('task-input').value = '';
+        document.getElementById('priority-select').value = 'low';
+        document.getElementById('due-time-input').value = '';
+    }
+
+    // Initial rendering
+    renderTasks();
+</script>
+
+</body>
+</html>

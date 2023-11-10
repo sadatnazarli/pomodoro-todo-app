@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Timer</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="script.js">
+</head>
+<body>
+
+<div class="container">
+    <h2 class="text-center mb-4">Pomodoro Timer</h2>
+
+    <div id="pomodoro-timer">
+        <p id="timer-display">25:00</p>
+        <button id="start-pomodoro" class="btn btn-success" onclick="startPomodoro()">Start Pomodoro</button>
+        <button id="stop-pomodoro" class="btn btn-danger" onclick="stopPomodoro()" disabled>Stop Pomodoro</button>
+    </div>
+
+    <button id="menu-button-pomodoro" onclick="goToToDoListPage()">Go to To-Do List</button>
+</div>
+
+<script>
+    function goToToDoListPage() {
+        window.location.href = 'index.html';
+    }
+
+    let pomodoroInterval;
+    let timerSeconds = 25 * 60; // 25 minutes
+
+    function startPomodoro() {
+        if (pomodoroInterval) {
+            clearInterval(pomodoroInterval);
+        }
+
+        const timerDisplay = document.getElementById('timer-display');
+        const startButton = document.getElementById('start-pomodoro');
+        const stopButton = document.getElementById('stop-pomodoro');
+
+        // Add 'active' class to start the animation
+        document.getElementById('pomodoro-timer').classList.add('active');
+
+        pomodoroInterval = setInterval(function () {
+            if (timerSeconds <= 0) {
+                clearInterval(pomodoroInterval);
+                timerSeconds = 25 * 60; // Reset timer to 25 minutes
+                startButton.disabled = false;
+                stopButton.disabled = true;
+            } else {
+                timerSeconds--;
+                const minutes = Math.floor(timerSeconds / 60);
+                const seconds = timerSeconds % 60;
+                timerDisplay.innerText = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                startButton.disabled = true;
+                stopButton.disabled = false;
+            }
+        }, 1000);
+    }
+
+    function stopPomodoro() {
+        clearInterval(pomodoroInterval);
+        timerSeconds = 25 * 60; // Reset timer to 25 minutes
+        document.getElementById('timer-display').innerText = '25:00';
+        document.getElementById('start-pomodoro').disabled = false;
+        document.getElementById('stop-pomodoro').disabled = true;
+
+        // Remove 'active' class to stop the animation
+        document.getElementById('pomodoro-timer').classList.remove('active');
+    }
+</script>
+
+</body>
+</html>
