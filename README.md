@@ -14,10 +14,3 @@ This project combines a Pomodoro Timer and a To-Do List to help you manage your 
   - Background color animation during Pomodoro.
   - Stop the Pomodoro session.
 
-## Getting Started
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/sadatnazarli/pomodoro-todo.git
-   cd pomodoro-todo
