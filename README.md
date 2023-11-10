@@ -1,2 +1,23 @@
-# pomodoro-todo-app
-The Pomodoro-Todo-App is a productivity application that seamlessly integrates a To-Do List manager with a Pomodoro Timer. This combination empowers users to organize their tasks efficiently and enhance their focus through timed work sessions.
+# Pomodoro Timer and To-Do List
+
+This project combines a Pomodoro Timer and a To-Do List to help you manage your tasks effectively.
+
+## Features
+
+- **To-Do List:**
+  - Add new tasks with priorities and due times.
+  - Mark tasks as completed.
+  - Dynamic task rendering.
+
+- **Pomodoro Timer:**
+  - Start a 25-minute Pomodoro session.
+  - Background color animation during Pomodoro.
+  - Stop the Pomodoro session.
+
+## Getting Started
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/sadatnazarli/pomodoro-todo.git
+   cd pomodoro-todo
